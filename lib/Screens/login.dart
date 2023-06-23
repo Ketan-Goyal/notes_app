@@ -1,10 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:notes_app/Screens/homeScreen.dart';
 import 'package:notes_app/Screens/signupPage.dart';
-import 'package:notes_app/models/userModel.dart';
 import 'package:notes_app/pages/home.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -22,7 +19,8 @@ class _LoginScreenState extends State<LoginScreen> {
     String email = emailTEC.text.trim();
     String password = passwordTEC.text.trim();
     if (email == "" || password == "") {
-      print("enter the details");
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Enter the Details Please")));
     } else {
       signIn(email, password);
     }
@@ -35,15 +33,10 @@ class _LoginScreenState extends State<LoginScreen> {
       userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
-      print(e.code);
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(e.code.toString())));
     }
     if (userCredential!.user != null) {
-      String uid = userCredential.user!.uid;
-      DocumentSnapshot snap =
-          await FirebaseFirestore.instance.collection("users").doc(uid).get();
-      LocalUser currUser =
-          LocalUser.fromMap(snap.data() as Map<String, dynamic>);
-
       Navigator.popUntil(context, (route) => route.isFirst);
       Navigator.pushReplacement(
         context,
@@ -75,7 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               // Expanded(child: Container()),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 decoration: BoxDecoration(
                   border: Border.all(
                     color: Theme.of(context).primaryColor,
@@ -126,10 +119,12 @@ class _LoginScreenState extends State<LoginScreen> {
               // Expanded(child: Container()),
               TextButton(
                 onPressed: () {
-                  Navigator.push(context,
-                      CupertinoPageRoute(builder: (context) => SignUpPage()));
+                  Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                          builder: (context) => const SignUpPage()));
                 },
-                child: Text("Don't Have An Account? "
+                child: const Text("Don't Have An Account? "
                     "Create "),
               )
             ],

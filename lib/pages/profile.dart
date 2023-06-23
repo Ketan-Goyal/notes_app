@@ -62,22 +62,20 @@ class _ProfilePageState extends State<ProfilePage> {
             const SizedBox(
               height: 40,
             ),
-            Container(
-              child: Text(
-                userProvider.localUser!.userid,
-                style: TextStyle(fontSize: 30),
-              ),
+            Text(
+              userProvider.localUser!.userid,
+              style: const TextStyle(fontSize: 30),
             ),
             const Expanded(child: SizedBox()),
             ElevatedButton(
                 onPressed: () async {
                   logOut();
                 },
-                child: Text("log out")),
+                child: const Text("log out")),
             const SizedBox(
               height: 5,
             ),
-            Text("v1.0.0"),
+            const Text("v1.0.0"),
           ],
         ),
       ),

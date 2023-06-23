@@ -22,8 +22,12 @@ class _SignUpPageState extends State<SignUpPage> {
     String cPassword = cPasswordTEC.text.trim();
 
     if (email == "" || password == "" || cPassword == "") {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("please enter all the details")));
       print("please enter all the details");
     } else if (cPassword != password) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text("Passwords don't match")));
       print("passwords doesn't match");
     } else {
       signUp(email, password);
@@ -36,6 +40,8 @@ class _SignUpPageState extends State<SignUpPage> {
       userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (ex) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(ex.code.toString())));
       print(ex.code);
     }
     if (userCredential != null) {
@@ -74,7 +80,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 height: maxHeight / 5,
               ),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 decoration: BoxDecoration(
                   border: Border.all(
                     color: Theme.of(context).primaryColor,
@@ -148,6 +154,5 @@ class _SignUpPageState extends State<SignUpPage> {
         ),
       ),
     );
-    ;
   }
 }

@@ -1,12 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:notes_app/models/userModel.dart';
 import 'package:notes_app/pages/note_page.dart';
 import 'package:notes_app/pages/profile.dart';
-import 'package:notes_app/providers/UserProvider.dart';
 import 'package:provider/provider.dart';
-
 import '../models/note.dart';
 import '../providers/Listprovider.dart';
 
@@ -23,7 +19,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     ListProvider notesProvider = Provider.of(context);
-    UserProvider userProvider = Provider.of(context);
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -32,11 +27,11 @@ class _HomePageState extends State<HomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ProfilePage(),
+                    builder: (context) => const ProfilePage(),
                   ),
                 );
               },
-              icon: Icon(Icons.person))
+              icon: const Icon(Icons.person))
         ],
         title: const Text('My Notes App'),
         centerTitle: true,
@@ -50,8 +45,10 @@ class _HomePageState extends State<HomePage> {
               onHorizontalDragUpdate: (details) {
                 int sensitivity = 8;
                 if (details.delta.dx < -sensitivity) {
-                  Navigator.push(context,
-                      CupertinoPageRoute(builder: (context) => ProfilePage()));
+                  Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                          builder: (context) => const ProfilePage()));
                 }
               },
               child: ListView(
@@ -67,7 +64,7 @@ class _HomePageState extends State<HomePage> {
                       },
                       autofocus: false,
                       focusNode: focusNode,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: "Search Here",
                         hintStyle: TextStyle(fontSize: 20),
                         border: InputBorder.none,
@@ -75,12 +72,13 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   SafeArea(
-                    child: (notesProvider.getFilteredNotes(searchQuery).length >
-                            0)
+                    child: (notesProvider
+                            .getFilteredNotes(searchQuery)
+                            .isNotEmpty)
                         ? GridView.builder(
                             keyboardDismissBehavior:
                                 ScrollViewKeyboardDismissBehavior.onDrag,
-                            physics: NeverScrollableScrollPhysics(),
+                            physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                             gridDelegate:
                                 const SliverGridDelegateWithFixedCrossAxisCount(
@@ -159,7 +157,7 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             )
-          : Center(child: CircularProgressIndicator()),
+          : const Center(child: CircularProgressIndicator()),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () {
