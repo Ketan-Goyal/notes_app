@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:notes_app/providers/UserProvider.dart';
+import 'package:provider/provider.dart';
 import '../models/note.dart';
 import '../services/api_service.dart';
 
@@ -46,7 +49,8 @@ class ListProvider with ChangeNotifier {
   }
 
   void fetchNotes() async {
-    notes = await ApiService.fetchNotes("Ketan Goyal");
+    User? user = FirebaseAuth.instance.currentUser;
+    notes = await ApiService.fetchNotes(user!.uid);
     isLoading = false;
     sortNotes();
     notifyListeners();

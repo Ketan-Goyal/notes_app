@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "710950277061",
+    "project_id": "notes-app-ketan",
+    "storage_bucket": "notes-app-ketan.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:710950277061:android:d75cefaa248798215145ac",
+        "android_client_info": {
+          "package_name": "com.example.notes_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "710950277061-5l1f7skgf2ae541i8jf3he73hq5hepvj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFLjRvVDBVmgFcBLrM-AkEAWzqbdomlx8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "710950277061-5l1f7skgf2ae541i8jf3he73hq5hepvj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

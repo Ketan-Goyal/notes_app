@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:notes_app/models/userModel.dart';
 import 'package:notes_app/providers/Listprovider.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
@@ -8,21 +10,27 @@ import '../models/note.dart';
 class AddNewPage extends StatefulWidget {
   final bool isUpdate;
   final Note? note;
-  const AddNewPage({super.key, required this.isUpdate, this.note});
+  const AddNewPage({
+    super.key,
+    required this.isUpdate,
+    this.note,
+  });
 
   @override
   State<AddNewPage> createState() => _AddNewPageState();
 }
 
 class _AddNewPageState extends State<AddNewPage> {
+  User? user;
   TextEditingController titleTEC = TextEditingController();
   TextEditingController contentTEC = TextEditingController();
 
   FocusNode noteFocus = FocusNode();
-  void addNewNote() {
+
+  void addNewNote() async {
     Note newNote = Note(
       id: const Uuid().v1(),
-      userid: "Ketan Goyal",
+      userid: user!.uid,
       title: titleTEC.text,
       content: contentTEC.text,
       dateAdded: DateTime.now(),
@@ -41,6 +49,7 @@ class _AddNewPageState extends State<AddNewPage> {
 
   @override
   void initState() {
+    user = FirebaseAuth.instance.currentUser;
     if (widget.isUpdate) {
       titleTEC.text = widget.note!.title!;
       contentTEC.text = widget.note!.content!;
